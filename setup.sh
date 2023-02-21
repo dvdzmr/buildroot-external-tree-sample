@@ -8,25 +8,40 @@ read -r answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
     echo "Installing dependencies..."
     echo "Detecting Linux distribution..."
-    if [ -f /etc/os-release ]; then
-        . /etc/os-release
-        DISTRO=$NAME
+    DNF_CMD=$(which dnf)
+    YUM_CMD=$(which yum)
+    APT_GET_CMD=$(which apt)
+    PACMAN=$(which pacman)
+
+    # Arch based distributions
+    if [ -n "$PACMAN" ]; then
+        echo "Installing dependencies for Arch Linux..."
+        sudo pacman -S --needed base-devel ncurses bison flex patch texinfo help2man gawk gperf \
+            libtool autoconf automake pkg-config ccache wget unzip rsync bc
+
+    # I'll be honest, I dont know if all of these package names below here are correct I tried my best guess.
+
+    # Red Hat based distributions
+    # DNF is preferred over YUM so lets that check first.
+    elif [ -n "$DNF_CMD" ]; then
+        echo "Installing dependencies for RedHat/CentOS..."
+        sudo yum install -y gcc gcc-c++ make ncurses-devel bison flex patch \
+            texinfo help2man gawk gperf libtool libtool-libs autoconf automake \
+            pkgconfig ccache wget unzip rsync bc
+    elif [ -n "$YUM_CMD" ]; then
+        echo "Installing dependencies for RedHat/CentOS..."
+        sudo yum install -y gcc gcc-c++ make ncurses-devel bison flex patch \
+            texinfo help2man gawk gperf libtool libtool-libs autoconf automake \
+            pkgconfig ccache wget unzip rsync bc
+
+    # Debian based distributions
+    elif [ -n "$APT_GET_CMD" ]; then
+        echo "Installing dependencies for Debian/Ubuntu..."
+        sudo apt-get install -y build-essential gcc g++ make ncurses-dev bison flex patch \
+            texinfo help2man gawk gperf libtool autoconf automake pkg-config ccache wget unzip \
+            rsync bc
     else
-        echo "Automatic dependency installation is only supported on Major Linux distributions."
+        echo "Could not detect Linux distribution. Please install the dependencies manually."
+        echo "https://buildroot.org/downloads/manual/manual.html"
+        echo "Chapter 2.1 has the list of dependencies."
     fi
-    echo "Detected Linux distribution: $DISTRO"
-    if [ "$DISTRO" = "Ubuntu" ]; then
-        sudo apt-get install build-essential git libncurses5-dev libssl-dev bc
-    elif [ "$DISTRO" = "Fedora" ]; then
-        sudo dnf install @development-tools git ncurses-devel openssl-devel bc
-    elif [ "$DISTRO" = "CentOS Linux" ]; then
-        sudo yum groupinstall "Development Tools" && sudo yum install git ncurses-devel openssl-devel bc
-    elif [ "$DISTRO" = "Arch Linux" ]; then
-        sudo pacman -S base-devel git ncurses openssl bc which sed binutils
-    else
-        echo "Automatic dependency installation is only supported on Major Linux distributions."
-    fi
-    echo "Dependencies installed."
-else
-    echo "Skipping dependency installation."
-fi
