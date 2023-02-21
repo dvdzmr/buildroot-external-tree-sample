@@ -10,7 +10,7 @@ This project contains 2 bash scripts
 
 ####  Clone and change to the directory of this repository
 ```bash
-  git clone https://github.com/dvdzmr/Buildroot_ExternalTree_Sample.git && \
+  git clone https://github.com/dvdzmr/buildroot-external-tree-sample.git && \
   cd buildroot-external-tree-sample
 ```
 
