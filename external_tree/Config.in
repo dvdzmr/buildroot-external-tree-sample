@@ -1,0 +1,11 @@
+# Uncomment this when you add your own packages, replacing PACKAGENAME with the name of the package folder.
+
+#source "$BR2_EXTERNAL_DVDZMR_PATH/package/python_pypi/Config.in"
+#source "$BR2_EXTERNAL_DVDZMR_PATH/package/python_local/Config.in"
+
+
+
+
+
+# format:
+# source "$BR2_EXTERNAL_DVDZMR_PATH/package/PACKAGENAME/Config.in"

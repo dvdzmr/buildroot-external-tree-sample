@@ -1,0 +1,4 @@
+config BR2_PACKAGE_PYTHON_PYPI
+	bool "python_pyi"
+	help
+	  Replace python_pypi with the name of your package, and use this space to write a short description of your package.

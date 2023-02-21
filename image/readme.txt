@@ -1,0 +1,1 @@
+After succesful compilation, images will be copied to this directory.

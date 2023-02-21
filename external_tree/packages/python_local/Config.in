@@ -1,0 +1,4 @@
+config BR2_PACKAGE_PYTHON_LOCAL
+	bool "python_local"
+	help
+	  Replace python_local with the name of your package, and use this space to write a short description of your package.
