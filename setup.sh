@@ -2,12 +2,6 @@
 
 # This script will install the dependencies for building with buildroot.
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: ./setup.sh <board>"
-    echo "Example: ./setup.sh raspberrypi3"
-    exit 1
-fi
-
 echo "Do you want to install all required dependencies for buildroot? (y/n)"
 read -r answer
 
@@ -36,10 +30,3 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 else
     echo "Skipping dependency installation."
 fi
-
-
-echo "Setting external tree path in buildroot..."
-
-cd ./buildroot
-make BR2_EXTERNAL=../external_tree/ $1_defconfig
-# format: make BR2_EXTERNAL=<path to external tree> <board>_defconfig
