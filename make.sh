@@ -12,9 +12,11 @@ if [[ $1 == "menuconfig"* ]]; then
     make BR2_EXTERNAL=../external_tree menuconfig
 else
     make BR2_EXTERNAL=../external_tree $1_defconfig
+    BOARDDIR=$1
+    export BOARDDIR
 fi
 
-echo "Do you want to execute 'make clean' before building? (y/n)"
+echo "Do you want to execute 'make clean' before building? (y/N)"
 read -r answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
     echo "Cleaning..."
@@ -25,6 +27,6 @@ fi
 echo "Building..."
 make
 
-# coping .img and .iso files from output/images to images folder.
-cp ./output/images/*.img ../images
-cp ./output/images/*.iso ../images
+# coping .img and .iso files from output/images to images folder. Don't worry about the error message if it cant find it for one of them.
+cp ./output/images/*.img ../image/$BOARDDIR.img
+cp ./output/images/*.iso ../image/$BOARDDIR.iso

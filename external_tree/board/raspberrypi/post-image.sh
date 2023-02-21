@@ -2,9 +2,9 @@
 
 set -e
 
-BOARD_DIR="$(dirname $0)"
+BOARD_DIR="$BOARDDIR"
 BOARD_NAME="$(basename ${BOARD_DIR})"
-GENIMAGE_CFG="${BOARD_DIR}/genimage-${BOARD_NAME}.cfg"
+GENIMAGE_CFG="${BR2_EXTERNAL_DVDZMR_PATH}/board/raspberrypi/genimage-${BOARD_NAME}.cfg"
 GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
 
 # Pass an empty rootpath. genimage makes a full copy of the given rootpath to
